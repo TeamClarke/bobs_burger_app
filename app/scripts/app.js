@@ -22,6 +22,7 @@ var AppRouter = Backbone.Router.extend({
 
       var template = Handlebars.compile($('#homeTemplate').html());
       $('#container').append(template());
+      App.hideButtons();
 
 
     $('a').on('click', function(){
@@ -39,7 +40,6 @@ var AppRouter = Backbone.Router.extend({
       url: App.apiLocation + 'burgers',
       type: 'GET'
     }).done(function(data){
-      console.log(data);
       data.forEach(function(e) { (e.price = parseFloat(e.price).toFixed(2)) } );
       var template = Handlebars.compile($('#burgerIndexTemplate').html());
       $('#container').html(template({
@@ -419,6 +419,11 @@ App.menuToggle = function(){
     $('#slider').toggleClass('cbp-spmenu-open' );
 
   });
+
+    $('.wrapper').on('click', function(){
+      $('body').removeClass('cbp-spmenu-push-toleft' );
+      $('#slider').removeClass('cbp-spmenu-open' );
+    });
 };
 
 App.loadCart = function(){
@@ -467,6 +472,7 @@ $(document).ready(function(){
   Backbone.history.start();
   App.menuToggle();
   App.loadCart();
+  App.hideButtons();
 });
 
 
